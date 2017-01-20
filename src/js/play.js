@@ -3,8 +3,7 @@ var playState = {
         game.load.image('synthline', 'assets/sprites/line.png');
     },
     create: function() {
-        var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-        logo.anchor.setTo(0.5, 0.5);
+        var bg = game.add.sprite(0, 0, 'grid');
 
         var music = game.add.audio('testmusic');
 
