@@ -1,5 +1,7 @@
-
 var playState = {
+    preload: function() {
+        game.load.image('synthline', 'assets/sprites/line.png');
+    },
     create: function() {
         var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
         logo.anchor.setTo(0.5, 0.5);
@@ -13,7 +15,7 @@ var playState = {
         filter.frequency.value = 100;
         filter.gain.value = filterval;
         console.log(filterval);
-        
+
         music.masterGainNode.disconnect();
         music.masterGainNode.connect(filter);
         music.masterGainNode.connect(analyser);
@@ -25,7 +27,7 @@ var playState = {
             var out = e.outputBuffer.getChannelData(0);
             var int = e.inputBuffer.getChannelData(0);
             var max = 0;
-            
+
             for(var i = 0; i < int.length; i++){
                 out[i] = 0;
                 max = int[i] > max ? int[i] : max;
@@ -35,6 +37,28 @@ var playState = {
             console.log(soundLevel);
 	    };
 
-        music.play();
+      music.play();
+
+      // Main line
+      var syntwave;
+      var count = 0;
+      var length = 918 / 20;
+      var points = [];
+
+      for (var i = 0; i < 20; i++)
+      {
+        points.push(new Phaser.Point(this.game.world.centerX,i * length));
+      }
+      syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, points);
+      syntwave.scale.set(0.8);
+
+      syntwave.updateAnimation = function() {
+          count += 0.1;
+
+          for (var i = 0; i < this.points.length; i++)
+          {
+              this.points[i].x = Math.sin(i * 0.5 + count) * 90;
+          }
+      };
     }
 };
