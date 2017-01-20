@@ -9,8 +9,6 @@ var shell = require('gulp-shell');
 
 gulp.task('build:scripts', function() {
     gulp.src(['./src/js/**/*.js'])
-        .pipe(concat('build.js'))
-        .pipe(uglify())
         .pipe(gulp.dest('./dist/js/'))
         .pipe(browserSync.reload({stream: true}))
 });
@@ -50,15 +48,6 @@ gulp.task('clean', function() {
     gulp.src("src/*.html")
         .pipe(gulp.dest('dist/'))
         .pipe(browserSync.stream());
-});
-
-gulp.task('browser-sync', function() {
-    browserSync.init({
-        server: {
-            baseDir: "./dist/",
-        },
-        port: 8000
-    });
 });
 
 gulp.task('browser-sync', function() {
