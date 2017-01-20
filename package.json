@@ -15,5 +15,18 @@
   "bugs": {
     "url": "https://github.com/sevanteri/kanttiaalto/issues"
   },
-  "homepage": "https://github.com/sevanteri/kanttiaalto#readme"
+  "homepage": "https://github.com/sevanteri/kanttiaalto#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.6",
+    "browserify": "^13.3.0",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-less": "^3.3.0",
+    "gulp-shell": "^0.5.2",
+    "gulp-uglify": "^2.0.0"
+  },
+  "dependencies": {
+    "phaser": "^2.6.2"
+  }
 }
