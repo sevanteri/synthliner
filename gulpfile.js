@@ -28,7 +28,7 @@ gulp.task('build:vendor', function(callback) {
 gulp.task('build:styles', function() {
     gulp.src(['src/less/**/*.less'])
         .pipe(less())
-        .pipe(gulp.dest('dist/build'))
+        .pipe(gulp.dest('dist/css'))
         .pipe(browserSync.reload({stream: true}))
 });
 
@@ -62,7 +62,8 @@ gulp.task('browser-sync', function() {
 gulp.task('scaffold', shell.task([
   'mkdir dist',
   'mkdir dist/assets',
-  'mkdir dist/js'
+  'mkdir dist/js',
+  'mkdir dist/css'
   ]
 ));
 
