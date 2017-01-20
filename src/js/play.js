@@ -4,6 +4,8 @@ var playState = {
         game.load.image('synthline', 'assets/sprites/line.png');
     },
     create: function() {
+        var that = this;
+
         var bg = game.add.sprite(0, 0, 'grid');
 
         var music = game.add.audio('testmusic');
@@ -33,7 +35,8 @@ var playState = {
                 max = int[i] > max ? int[i] : max;
             }
             //convert from magitude to decibel
-            this.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
+            that.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
+            console.log(that.soundLevel);
         };
 
         music.play();
@@ -51,11 +54,11 @@ var playState = {
         //syntwave.scale.set(0.8);
 
         syntwave.updateAnimation = function() {
-            for (var i = this.points.length; i == 1; i--) {
-                // ei toimi
-                this.points[i].x = this.points[i + 1].x;
-                this.points[i].x = this.game.world.centerX - this.soundLevel*20;
+            for (var i = this.points.length - 1; i > 0; i--) {
+                this.points[i].x = this.points[i - 1].x;
             }
+            // sound level is in range of [-40, 0]
+            this.points[0].x = (that.soundLevel + 20) * 2;
         };
     }
 };
