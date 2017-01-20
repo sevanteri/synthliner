@@ -86,5 +86,5 @@ gulp.task('watch', function() {
 
 
 gulp.task('default', function() {
-    gulp.run('clean', 'browser-sync', 'scaffold', 'build:vendor', 'build:scripts', 'build:styles', 'build:images', 'build:html', 'watch');
+    gulp.run('browser-sync', 'build:vendor', 'build:scripts', 'build:styles', 'build:images', 'build:html', 'watch');
 });
