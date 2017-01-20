@@ -1,0 +1,19 @@
+{
+  "name": "kanttiaalto",
+  "version": "0.0.1",
+  "description": "The Greatest Game Ever Made!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no tests, lol\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sevanteri/kanttiaalto.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/sevanteri/kanttiaalto/issues"
+  },
+  "homepage": "https://github.com/sevanteri/kanttiaalto#readme"
+}
