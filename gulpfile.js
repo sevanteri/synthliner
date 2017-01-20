@@ -70,18 +70,21 @@ gulp.task('clean', shell.task([
   'rm -rf dist/'
 ]));
 
+gulp.task('watch', function() {
+  gulp.watch('./src/js/**', function(event) {
+      gulp.run('build:scripts');
+  });
+
+  gulp.watch('./src/less/**', function(event) {
+      gulp.run('build:styles');
+  });
+
+  gulp.watch('./src/**/*.html', function(event) {
+      gulp.run('build:html');
+  });
+});
+
+
 gulp.task('default', function() {
-    gulp.run('clean', 'browser-sync', 'scaffold', 'build:vendor', 'build:scripts', 'build:styles', 'build:images', 'build:html');
-
-    gulp.watch('./src/js/**', function(event) {
-        gulp.run('build:scripts');
-    });
-
-    gulp.watch('./src/less/**', function(event) {
-        gulp.run('build:styles');
-    });
-
-    gulp.watch('./src/**/*.html', function(event) {
-        gulp.run('build:html');
-    });
+    gulp.run('clean', 'browser-sync', 'scaffold', 'build:vendor', 'build:scripts', 'build:styles', 'build:images', 'build:html', 'watch');
 });
