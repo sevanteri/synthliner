@@ -2,7 +2,7 @@
 var menuState = {
     create: function() {
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        var texti = game.add.button(80, 80, 'butan', this.startGame, this);
+        var texti = game.add.button(20, 20, 'playButton', this.startGame, this);
     },
 
     startGame: function() {

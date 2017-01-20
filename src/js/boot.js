@@ -2,6 +2,7 @@
 
 var bootState = {
     preload: function() {
+        game.load.image('playButton', './assets/play.png');
         game.load.image('logo', './assets/phaser.png');
         game.load.audio('testmusic', ['./assets/sound/Keinzweiter_Mircoobee.mp3']);
     },
