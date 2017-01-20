@@ -82,6 +82,10 @@ gulp.task('watch', function() {
   gulp.watch('./src/**/*.html', function(event) {
       gulp.run('build:html');
   });
+
+  gulp.watch('./src/assets/**/*', function(event) {
+      gulp.run('build:images');
+  });
 });
 
 
