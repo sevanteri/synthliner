@@ -9,8 +9,6 @@ var shell = require('gulp-shell');
 
 gulp.task('build:scripts', function() {
     gulp.src(['./src/js/**/*.js'])
-        .pipe(concat('build.js'))
-        .pipe(uglify())
         .pipe(gulp.dest('./dist/js/'))
         .pipe(browserSync.reload({stream: true}))
 });
@@ -61,15 +59,6 @@ gulp.task('browser-sync', function() {
     });
 });
 
-gulp.task('browser-sync', function() {
-    browserSync.init({
-        server: {
-            baseDir: "./dist/",
-        },
-        port: 8000
-    });
-});
-
 gulp.task('scaffold', shell.task([
   'mkdir dist',
   'mkdir dist/assets',
@@ -81,18 +70,21 @@ gulp.task('clean', shell.task([
   'rm -rf dist/'
 ]));
 
+gulp.task('watch', function() {
+  gulp.watch('./src/js/**', function(event) {
+      gulp.run('build:scripts');
+  });
+
+  gulp.watch('./src/less/**', function(event) {
+      gulp.run('build:styles');
+  });
+
+  gulp.watch('./src/**/*.html', function(event) {
+      gulp.run('build:html');
+  });
+});
+
+
 gulp.task('default', function() {
-    gulp.run('clean', 'browser-sync', 'scaffold', 'build:vendor', 'build:scripts', 'build:styles', 'build:images', 'build:html');
-
-    gulp.watch('./src/js/**', function(event) {
-        gulp.run('build:scripts');
-    });
-
-    gulp.watch('./src/less/**', function(event) {
-        gulp.run('build:styles');
-    });
-
-    gulp.watch('./src/**/*.html', function(event) {
-        gulp.run('build:html');
-    });
+    gulp.run('clean', 'browser-sync', 'scaffold', 'build:vendor', 'build:scripts', 'build:styles', 'build:images', 'build:html', 'watch');
 });
