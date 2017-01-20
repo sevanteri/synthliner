@@ -1,4 +1,5 @@
 var playState = {
+    soundLevel: 0,
     preload: function() {
         game.load.image('synthline', 'assets/sprites/line.png');
     },
@@ -13,7 +14,7 @@ var playState = {
         filter.type = 'bandpass';
         filter.frequency.value = 100;
         filter.gain.value = filterval;
-        console.log(filterval);
+        //console.log(filterval);
 
         music.masterGainNode.disconnect();
         music.masterGainNode.connect(filter);
@@ -32,32 +33,29 @@ var playState = {
                 max = int[i] > max ? int[i] : max;
             }
             //convert from magitude to decibel
-            soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
-            console.log(soundLevel);
-	    };
+            this.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
+        };
 
-      music.play();
+        music.play();
 
-      // Main line
-      var syntwave;
-      var count = 0;
-      var length = 918 / 20;
-      var points = [];
+        // Main line
+        var syntwave;
+        var length = 354 / 20;
+        var points = [];
 
-      for (var i = 0; i < 20; i++)
-      {
-        points.push(new Phaser.Point(this.game.world.centerX,i * length));
-      }
-      syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, points);
-      syntwave.scale.set(0.8);
+        for (var i = 0; i < 20; i++) {
+            points.push(new Phaser.Point(this.game.world.centerX,
+                                         this.game.world.height - i * length));
+        }
+        syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, points);
+        //syntwave.scale.set(0.8);
 
-      syntwave.updateAnimation = function() {
-          count += 0.1;
-
-          for (var i = 0; i < this.points.length; i++)
-          {
-              this.points[i].x = Math.sin(i * 0.5 + count) * 90;
-          }
-      };
+        syntwave.updateAnimation = function() {
+            for (var i = this.points.length; i == 1; i--) {
+                // ei toimi
+                this.points[i].x = this.points[i + 1].x;
+                this.points[i].x = this.game.world.centerX - this.soundLevel*20;
+            }
+        };
     }
 };
