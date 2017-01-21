@@ -22,6 +22,9 @@ var playState = {
             this.music.loopFull();
         }, this);
 
+        game.input.onTap.add(function(){
+            this.unpause();
+        }, this);
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
         this.analyser = this.music.context.createScriptProcessor(0,1,1);
@@ -132,6 +135,10 @@ var playState = {
       this.collides = this.checkTouchCollision();
       this.moveMotoToLine();
       this.bg.tilePosition.y += this.bgSpeed;
+      // Check screen orientation
+      if(screen.orientation.type == "landscape-primary" && window.innerWidth <= 400){
+        game.paused = true;
+      }
     },
     movePlayerToPointer: function() {
       // Update player coordinates to pointer
@@ -159,5 +166,10 @@ var playState = {
           collided = true;
       }
       return collided;
+    },
+    unpause: function(event){
+        if(game.paused){
+            game.paused = false;
+        }
     }
 };
