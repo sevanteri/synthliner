@@ -9,8 +9,9 @@ var playState = {
         this.treshold = 0.00;
         this.sineWaveCounter = 0;
         this.bpm = 60;
+        this.bgSpeed = 2;
 
-        this.bg = game.add.sprite(0, 0, 'grid');
+        this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
         this.music = game.add.audio('stage_music_1');
 
         this.game.onPause.add(function() {
@@ -130,6 +131,7 @@ var playState = {
       this.movePlayerToPointer();
       this.collides = this.checkTouchCollision();
       this.moveMotoToLine();
+      this.bg.tilePosition.y += this.bgSpeed;
     },
     movePlayerToPointer: function() {
       // Update player coordinates to pointer
