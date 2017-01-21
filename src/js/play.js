@@ -2,9 +2,10 @@ var playState = {
     create: function() {
         var that = this;
         this.syntwave = null;
-        this.soundLevel = 0;
+        this.soundLevel = 0.5;
         this.difficulty = 0.3;
         this.sampleSkipCounter = 0;
+        this.treshold = 0.1;
 
         this.bg = game.add.sprite(0, 0, 'grid');
         this.music = game.add.audio('testmusic');
@@ -17,11 +18,13 @@ var playState = {
         this.filter.type = 'bandpass';
         this.filter.frequency.value = 200;
         this.filter.gain.value = filterval;
+
         //console.log(filterval);
 
-        //music.masterGainNode.disconnect();
+        //this.music.masterGainNode.disconnect();
         this.music.masterGainNode.connect(this.filter);
-        //music.masterGainNode.connect(analyser);
+        //this.music.masterGainNode.connect(this.listenFilter);
+        //this.listenFilter.connect(this.music.context.destination);
         this.filter.connect(this.analyser);
         this.analyser.connect(this.music.context.destination);
 
@@ -44,7 +47,10 @@ var playState = {
                 that.previousSoundLevel = that.soundLevel;
                 var delta = that.soundLevel > max ? that.soundLevel - max : max - that.soundLevel;
                 delta = delta > that.difficulty ? that.difficulty : delta;
+                delta = delta < that.treshold ? 0 : delta;
                 that.soundLevel = that.soundLevel > max ? that.soundLevel - delta : that.soundLevel + delta;
+            } else {
+                that.previousSoundLevel = max;
             }
         };
         this.music.loopFull();
