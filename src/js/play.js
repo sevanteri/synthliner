@@ -7,6 +7,8 @@ var playState = {
         this.difficulty = 1;
         this.sampleSkipCounter = 0;
         this.treshold = 0.00;
+        this.sineWaveCounter = 0;
+        this.bpm = 60;
 
         this.bg = game.add.sprite(0, 0, 'grid');
         this.music = game.add.audio('stage_music_1');
@@ -28,7 +30,9 @@ var playState = {
         this.filter.frequency.value = 800;
         this.filter.gain.value = filterval;
 
-        // this.music.masterGainNode.disconnect();
+        this.music.masterGainNode.gain.value = 2;
+        //this.music.masterGainNode.disconnect();
+
         this.music.masterGainNode.connect(this.filter);
         //this.music.masterGainNode.connect(this.listenFilter);
         // this.filter.connect(this.music.context.destination);
@@ -91,7 +95,10 @@ var playState = {
 
             }
             // sound level is in range of [0, 1]
-            that.wavePoints[0].x = (that.soundLevel) * that.game.world.width*1.2 - that.game.world.width/2;
+            var bpm = 60;
+            that.sineWaveCounter = that.sineWaveCounter + game.time.physicsElapsed;
+            var sinewavevalue = that.sineWaveCounter / bpm * 60 * (Math.PI / 2);
+            this.points[0].x = (that.soundLevel / 2 + ((Math.sin(sinewavevalue) + 1) / 2 *0.5)) * that.game.world.width*1.2 - that.game.world.width/2;
         };
 
         // **************** Particle emitter ****************
