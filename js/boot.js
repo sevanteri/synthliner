@@ -5,6 +5,7 @@ var bootState = {
         game.load.image('moto', './assets/moto.png');
         game.load.image('synthline', './assets/line.png');
         game.load.image('title', './assets/title.png');
+        game.load.image('pause', './assets/pausebutton.png');
 
         game.load.image('particle', './assets/particle.png');
         game.load.image('particle2', './assets/particle2.png');

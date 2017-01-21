@@ -24,12 +24,28 @@ var playState = {
         }, this);
 
         this.game.onResume.add(function() {
-            this.music.loopFull();
+            game.scale.startFullScreen(false);
+            this.music.play();
             this.pauseGroup.x = -500;
+        }, this);
+
+        this.game.scale.onFullScreenChange.add(function(scale) {
+            if (!scale.isFullscreen) {
+                this.game.paused = true;
+            }
         }, this);
 
         game.input.onTap.add(function(){
             this.unpause();
+        }, this);
+
+        this.music.onStop.add(function() {
+            // center player and teddy
+            // crash
+            // explosions
+            // fade
+            // menu
+            game.state.start('menu');
         }, this);
 
         // background pulse animations
@@ -80,7 +96,7 @@ var playState = {
                 that.previousSoundLevel = max;
             }
         };
-        this.music.loopFull();
+        this.music.play();
 
         // ****************    Synthwave   **********************
         var motoOffset = 32;
@@ -154,7 +170,18 @@ var playState = {
         this.score = game.add.bitmapText(game.world.centerX, game.world.height - 20, 'awesomu',"Score: " + this.scoreNumber + "1X",18);
 
         this.score.anchor.setTo(0.5, 0.5);
-      },
+
+
+        // ******** pause butan
+        this.pauseButton = game.add.button(this.game.world.width - 40,
+                                           4,
+                                           'pause',
+                                           function() {
+                                               this.game.paused = true;
+                                           },
+                                           this);
+    },
+
       motoShadowTimer: 0,
       moveMotoToLine: function() {
           this.motoShadowTimer += game.time.physicsElapsed;
@@ -196,6 +223,7 @@ var playState = {
         this.multiplierResetSound.play();
         this.comboTimer = 0;
         this.scoreMultipler = 1;
+        this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
       }
     },
     movePlayerToPointer: function() {
@@ -207,7 +235,7 @@ var playState = {
       if(this.sampleSkipCounter % 2 === 0 && this.collides) {
         this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
 
-        this.updateScore(1 * this.scoreMultipler);
+        this.updateScore(this.scoreMultipler + Math.floor((this.game.world.height - this.player.y)/10));
         this.comboTimer++;
         if(this.comboTimer > 100) {
           this.comboTimer = 0;

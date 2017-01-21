@@ -97,11 +97,5 @@ h2 {
   color: yellow;
 }
 #game {
-  width: 320px;
   margin: 0 auto 0 auto;
-}
-@media only screen (max-device-width: 480px) {
-  #game {
-    width: 100%;
-  }
 }
