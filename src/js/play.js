@@ -1,6 +1,7 @@
 var playState = {
     create: function() {
         var that = this;
+        // **************    GAME STUFF **************
         this.syntwave = null;
         this.soundLevel = 0;
 
@@ -45,34 +46,60 @@ var playState = {
 
         // ****************    Synthwave   **********************
         var length = 354 / 80;
-        var points = [];
+        this.wavePoints = [];
+
+        this.syntwavePointGroup = game.add.physicsGroup();
 
         for (var i = 0; i < 80; i++) {
-            points.push(new Phaser.Point(0, i * length));
+            this.wavePoints.push(new Phaser.Point(0, i * length));
+            this.syntwavePointGroup.create(this.wavePoints[i]);
         }
-        this.syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, points);
+        this.syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, this.wavePoints);
         //syntwave.scale.set(0.8);
 
         this.syntwave.updateAnimation = function() {
-            for (var i = this.points.length - 1; i > 0; i--) {
-                this.points[i].x = this.points[i - 1].x;
+            for (var i = that.wavePoints.length - 1; i > 0; i--) {
+                that.wavePoints[i].x = that.wavePoints[i - 1].x;
+
             }
             // sound level is in range of [-40, 0]
-            this.points[0].x = (that.soundLevel) * that.game.world.width - that.game.world.width/2;
+            that.wavePoints[0].x = (that.soundLevel) * that.game.world.width - that.game.world.width/2;
         };
 
         // ****************    Touch   **********************
         this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'touchSprite');
         this.player.scale.set(0.05);
-        game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.anchor.setTo(0.5, 0.5);
     },
+    // ----------------- UPDATE -----------------------
     update: function() {
       this.movePlayerToPointer();
+      this.checkTouchCollision();
+    },
+    // --------------- RENDER ------------------------
+    render: function() {
+
     },
     movePlayerToPointer: function() {
       // Update player coordinates to pointer
       this.player.x = game.input.x;
       this.player.y = game.input.y;
+    },
+    checkTouchCollision: function() {
+      var collided = false;
+      var touchSize = 40;
+      var lineSize = 40;
+      var pointNumber = Math.floor(game.input.y / (354 / 80));
+      var point = this.wavePoints[pointNumber];
+      var playerX = game.input.x;
+      var playerY = game.input.y;
+
+
+      point.realX = game.world.centerX + point.x;
+      point.realY = point.y;
+      if ((playerX + touchSize) > (point.realX - lineSize) && (playerX - touchSize) < (point.realX + lineSize)){
+          collided = true;
+      }
+      return collided;
     }
 };
