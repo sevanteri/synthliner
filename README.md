@@ -1,4 +1,4 @@
-# AALTOVIIVA SYSTEEMI PELI
+# SYNTH LINER
 
 
 ### Installation
