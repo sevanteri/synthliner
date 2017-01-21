@@ -25,7 +25,7 @@ var playState = {
         // background animations
         this.grid_anim1 = game.add.sprite(28, 32, 'grid_anim1');
         this.grid_anim1.animations.add('go');
-        this.grid_anim1.animations.play('go', 50);
+        this.grid_anim1.animations.play('go', 10, false, true);
 
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
@@ -137,6 +137,7 @@ var playState = {
       this.collides = this.checkTouchCollision();
       this.moveMotoToLine();
       this.bg.tilePosition.y += this.bgSpeed;
+      this.grid_anim1.y += this.bgSpeed;
     },
     movePlayerToPointer: function() {
       // Update player coordinates to pointer
