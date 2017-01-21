@@ -161,7 +161,18 @@ var playState = {
         this.score = game.add.bitmapText(game.world.centerX, game.world.height - 20, 'awesomu',"Score: " + this.scoreNumber + "1X",18);
 
         this.score.anchor.setTo(0.5, 0.5);
-      },
+
+
+        // ******** pause butan
+        this.pauseButton = game.add.button(this.game.world.width - 40,
+                                           4,
+                                           'pause',
+                                           function() {
+                                               this.game.paused = true;
+                                           },
+                                           this);
+    },
+
       motoShadowTimer: 0,
       moveMotoToLine: function() {
           this.motoShadowTimer += game.time.physicsElapsed;
