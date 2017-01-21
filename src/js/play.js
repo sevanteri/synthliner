@@ -53,7 +53,7 @@ var playState = {
             // that.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
 
             that.sampleSkipCounter++;
-            if(that.sampleSkipCounter % 2 === 0) {
+            if(that.sampleSkipCounter % 3 === 0) {
                 that.sampleSkipCounter = 0;
                 that.previousSoundLevel = that.soundLevel;
                 var delta = that.soundLevel > max ? that.soundLevel - max : max - that.soundLevel;
@@ -98,6 +98,7 @@ var playState = {
             var bpm = 60;
             that.sineWaveCounter = that.sineWaveCounter + game.time.physicsElapsed;
             var sinewavevalue = that.sineWaveCounter / bpm * 60 * (Math.PI / 2);
+            sinewavevalue = that.sineWaveCounter > 10 && parseInt(that.sineWaveCounter) % (bpm / 6) < 5 ? sinewavevalue - 1 + that.sineWaveCounter / bpm * 120 * (Math.PI / 2) : sinewavevalue;
             this.points[0].x = (0.15 + that.soundLevel / 2 + ((Math.sin(sinewavevalue) + 1) / 2 *0.5)) * that.game.world.width*1.2 - that.game.world.width/2;
         };
 
