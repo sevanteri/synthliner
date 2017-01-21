@@ -155,7 +155,7 @@ var playState = {
       this.bg.tilePosition.y += this.bgSpeed;
 
       // Check screen orientation
-      if(screen.orientation.type == "landscape-primary" && window.innerWidth <= 400){
+      if(screen.orientation.type == "landscape-primary" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
         game.paused = true;
       }
       this.grid_anim1.y += this.bgSpeed;
