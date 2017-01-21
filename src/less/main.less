@@ -20,16 +20,7 @@ time, mark, audio, video {
 }
 
 body {
-  background: #000000;
-}
-canvas, html, body {
-
-}
-canvas {
-    position: relative;
-}
-body {
-    position: relative;
+    background: #000000;
     margin: 0;
     padding: 0;
 }
@@ -41,6 +32,10 @@ h2 {
 }
 
 #game {
-    width: 400px;
+    width: 320px;
     margin: 0 auto 0 auto;
+
+    @media only screen (max-device-width : 480px) {
+		  width: 100%;
+	  }
 }
