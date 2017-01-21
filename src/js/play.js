@@ -137,6 +137,8 @@ var playState = {
         // random x and y
         var randX = Math.floor(Math.random() * 11);
         var randY = Math.floor(Math.random() * 22);
+        var randR = Math.floor(Math.random() * 4);
+        this.grid_anim1.rotation = [0, Math.PI/2, Math.PI, Math.PI/2*3][randR];
         this.grid_anim1.x = randX * 28 + randX * 2;
         this.grid_anim1.y = randY * 10 + randY * 4;
         this.grid_anim1.animations.play('go', 10);
