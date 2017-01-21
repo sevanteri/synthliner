@@ -1,5 +1,8 @@
 var introState = {
     create: function() {
+        menumusic = game.add.audio('menumusic');
+        menumusic.loopFull();
+
         this.title = game.add.image(this.game.world.centerX, 
                                    90,
                                    'title');
