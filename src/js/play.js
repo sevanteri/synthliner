@@ -3,26 +3,26 @@ var playState = {
         var that = this;
         this.syntwave = null;
         this.soundLevel = 0.5;
-        this.difficulty = 0.2;
+        this.difficulty = 1;
         this.sampleSkipCounter = 0;
-        this.treshold = 0.1;
+        this.treshold = 0.00;
 
         this.bg = game.add.sprite(0, 0, 'grid');
-        this.music = game.add.audio('testmusic');
+        this.music = game.add.audio('stage_music_1');
 
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
         this.analyser = this.music.context.createScriptProcessor(0,1,1);
 
-        var filterval = 0.05;
+        var filterval = 1;
         this.filter.type = 'bandpass';
-        this.filter.frequency.value = 300;
+        this.filter.frequency.value = 800;
         this.filter.gain.value = filterval;
 
-        //this.music.masterGainNode.disconnect();
+        this.music.masterGainNode.disconnect();
         this.music.masterGainNode.connect(this.filter);
         //this.music.masterGainNode.connect(this.listenFilter);
-        //this.listenFilter.connect(this.music.context.destination);
+        this.filter.connect(this.music.context.destination);
         this.filter.connect(this.analyser);
         this.analyser.connect(this.music.context.destination);
 
