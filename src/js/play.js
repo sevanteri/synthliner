@@ -22,6 +22,11 @@ var playState = {
             this.music.loopFull();
         }, this);
 
+        // background animations
+        this.grid_anim1 = game.add.sprite(28, 32, 'grid_anim1');
+        this.grid_anim1.animations.add('go');
+        this.grid_anim1.animations.play('go', 50);
+
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
         this.analyser = this.music.context.createScriptProcessor(0,1,1);
