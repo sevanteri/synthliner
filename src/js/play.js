@@ -10,6 +10,7 @@ var playState = {
         this.sineWaveCounter = 0;
         this.bpm = 60;
         this.bgSpeed = 2;
+        this.scoreNumber = 0;
 
         this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
         this.music = game.add.audio('stage_music_1');
@@ -146,6 +147,10 @@ var playState = {
         this.pauseGroup.add(pauseguide);
         this.pauseGroup.x = -500;
 
+        // ****************    Texts   **********************
+        this.score = game.add.bitmapText(game.world.centerX, game.world.height - 20, 'awesomu',"Score: " + this.scoreNumber,18);
+
+        this.score.anchor.setTo(0.5, 0.5);
       },
       motoShadowTimer: 0,
       moveMotoToLine: function() {
@@ -192,6 +197,7 @@ var playState = {
       this.emitter.y = game.input.y;
       if(this.sampleSkipCounter % 2 === 0 && this.collides) {
         this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
+        this.updateScore(10);
       }
     },
     checkTouchCollision: function() {
@@ -215,5 +221,9 @@ var playState = {
         if(game.paused){
             game.paused = false;
         }
+    },
+    updateScore: function(score){
+      this.scoreNumber += score;
+      this.score.setText("Score: " + this.scoreNumber);
     }
 };
