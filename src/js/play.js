@@ -9,6 +9,11 @@ var playState = {
 
         this.bg = game.add.sprite(0, 0, 'grid');
         this.music = game.add.audio('testmusic');
+        this.emitter = game.add.emitter(game.world.centerX, 200, 200);
+        this.emitter.makeParticles(['particle']);
+        this.emitter.setAlpha(0.3, 0.8);
+        this.emitter.setScale(0.5, 1);
+        this.emitter.gravity = 200;
 
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
@@ -38,6 +43,7 @@ var playState = {
                 out[i] = 0;
                 max = Math.max(int[i], max);
             }
+            console.log(max);
             //convert from magitude to decibel
             // that.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
 
@@ -92,5 +98,10 @@ var playState = {
       // Update player coordinates to pointer
       this.player.x = game.input.x;
       this.player.y = game.input.y;
+      this.emitter.x = game.input.x;
+      this.emitter.y = game.input.y;
+      if(this.sampleSkipCounter % 2 === 0) {
+        this.emitter.start(true, 1000, 0, Math.random() > 0.5 ? 2 : 1);
+      }
     }
 };
