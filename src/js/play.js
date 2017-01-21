@@ -22,6 +22,11 @@ var playState = {
             this.music.loopFull();
         }, this);
 
+        // background pulse animations
+        this.grid_anim1 = game.add.sprite(28, 32, 'grid_anim1');
+        this.grid_anim1.animations.add('go');
+        this.game.time.events.loop(Phaser.Timer.SECOND, this.showBgAnim, this);
+
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
         this.analyser = this.music.context.createScriptProcessor(0,1,1);
@@ -126,12 +131,23 @@ var playState = {
           }
           this.moto.x = this.game.world.centerX + this.lastPoint;
     },
+    showBgAnim: function() {
+        // if (Math.random() > 0.5) return;
+
+        // random x and y
+        var randX = Math.floor(Math.random() * 11);
+        var randY = Math.floor(Math.random() * 22);
+        this.grid_anim1.x = randX * 28 + randX * 2;
+        this.grid_anim1.y = randY * 10 + randY * 4;
+        this.grid_anim1.animations.play('go', 10);
+    },
     // ----------------- UPDATE -----------------------
     update: function() {
       this.movePlayerToPointer();
       this.collides = this.checkTouchCollision();
       this.moveMotoToLine();
       this.bg.tilePosition.y += this.bgSpeed;
+      this.grid_anim1.y += this.bgSpeed;
     },
     movePlayerToPointer: function() {
       // Update player coordinates to pointer
