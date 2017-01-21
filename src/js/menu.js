@@ -30,6 +30,10 @@ var menuState = {
         scaleObj(this.headphone, 1);
         fadeObj(this.headphone, 1);
 
+        this.game.input.onTap.add(function() {
+            game.scale.startFullScreen(false);
+        });
+
     },
 
     startGame: function() {

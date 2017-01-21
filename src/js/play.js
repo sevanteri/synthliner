@@ -149,16 +149,16 @@ var playState = {
 
         // ***************     Pause text
         var pauseText = game.add.bitmapText(this.game.world.centerX,
-                                       this.game.world.centerY,
-                                       'awesomu',
-                                       "PAUSED",
-                                        38);
+                                            this.game.world.centerY,
+                                            'awesomu',
+                                            "PAUSED",
+                                            38);
         pauseText.anchor.setTo(0.5, 0.5);
         var pauseguide = game.add.bitmapText(this.game.world.centerX,
-                                              this.game.world.centerY + 34,
-                                              'awesomu',
-                                              "Tap to Continue",
-                                              20);
+                                             this.game.world.centerY + 34,
+                                             'awesomu',
+                                             "Tap to Continue",
+                                             20);
         pauseguide.anchor.setTo(0.5, 0.5);
 
         this.pauseGroup = game.add.group();
@@ -173,26 +173,28 @@ var playState = {
 
 
         // ******** pause butan
-        this.pauseButton = game.add.button(this.game.world.width - 40,
-                                           4,
-                                           'pause',
-                                           function() {
-                                               this.game.paused = true;
-                                           },
-                                           this);
+        this.pauseButton = game.add.button(
+            this.game.world.width - 40,
+            4,
+            'pause',
+            function() {
+                this.game.paused = true;
+            },
+            this
+        );
     },
 
-      motoShadowTimer: 0,
-      moveMotoToLine: function() {
-          this.motoShadowTimer += game.time.physicsElapsed;
-          if (this.motoShadowTimer >= 0.1) {
-              this.motoShadowTimer = 0;
-              for (i = this.motoShadows.length - 1; i > 0; i--) {
-                  this.motoShadows[i].x = this.motoShadows[i - 1].x;
-              }
-              this.motoShadows[0].x = this.moto.x;
-          }
-          this.moto.x = this.game.world.centerX + this.lastPoint;
+    motoShadowTimer: 0,
+    moveMotoToLine: function() {
+        this.motoShadowTimer += game.time.physicsElapsed;
+        if (this.motoShadowTimer >= 0.1) {
+            this.motoShadowTimer = 0;
+            for (i = this.motoShadows.length - 1; i > 0; i--) {
+                this.motoShadows[i].x = this.motoShadows[i - 1].x;
+            }
+            this.motoShadows[0].x = this.moto.x;
+        }
+        this.moto.x = this.game.world.centerX + this.lastPoint;
     },
     showBgAnim: function() {
         // if (Math.random() > 0.5) return;
@@ -208,57 +210,57 @@ var playState = {
     },
     // ----------------- UPDATE -----------------------
     update: function() {
-      this.movePlayerToPointer();
-      this.collides = this.checkTouchCollision();
-      this.moveMotoToLine();
-      this.bg.tilePosition.y += this.bgSpeed;
+        this.movePlayerToPointer();
+        this.collides = this.checkTouchCollision();
+        this.moveMotoToLine();
+        this.bg.tilePosition.y += this.bgSpeed;
 
-      // Check screen orientation
-      if(screen.orientation.type == "landscape-primary" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-        game.paused = true;
-      }
-      this.grid_anim1.y += this.bgSpeed;
+        // Check screen orientation
+        if(screen.orientation.type == "landscape-primary" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+            game.paused = true;
+        }
+        this.grid_anim1.y += this.bgSpeed;
 
-      if (!this.collides && this.scoreMultipler !== 1) {
-        this.multiplierResetSound.play();
-        this.comboTimer = 0;
-        this.scoreMultipler = 1;
-        this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
-      }
+        if (!this.collides && this.scoreMultipler !== 1) {
+            this.multiplierResetSound.play();
+            this.comboTimer = 0;
+            this.scoreMultipler = 1;
+            this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
+        }
     },
     movePlayerToPointer: function() {
-      // Update player coordinates to pointer
-      this.player.x = game.input.x;
-      this.player.y = game.input.y;
-      this.emitter.x = game.input.x;
-      this.emitter.y = game.input.y + 16;
-      if(this.sampleSkipCounter % 2 === 0 && this.collides) {
-        this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
+        // Update player coordinates to pointer
+        this.player.x = game.input.x;
+        this.player.y = game.input.y;
+        this.emitter.x = game.input.x;
+        this.emitter.y = game.input.y + 16;
+        if(this.sampleSkipCounter % 2 === 0 && this.collides) {
+            this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
 
-        this.updateScore(this.scoreMultipler + Math.floor((this.game.world.height - this.player.y)/10));
-        this.comboTimer++;
-        if(this.comboTimer > 100) {
-          this.comboTimer = 0;
-          this.scoreMultipler++;
+            this.updateScore(this.scoreMultipler + Math.floor((this.game.world.height - this.player.y)/10));
+            this.comboTimer++;
+            if(this.comboTimer > 100) {
+                this.comboTimer = 0;
+                this.scoreMultipler++;
+            }
         }
-      }
     },
     checkTouchCollision: function() {
-      var collided = false;
-      var touchSize = 20;
-      var lineSize = 10;
-      var pointNumber = Math.floor(game.input.y / (354 / 80));
-      var point = this.wavePoints[pointNumber];
-      var playerX = game.input.x;
-      var playerY = game.input.y;
+        var collided = false;
+        var touchSize = 20;
+        var lineSize = 10;
+        var pointNumber = Math.floor(game.input.y / (354 / 80));
+        var point = this.wavePoints[pointNumber];
+        var playerX = game.input.x;
+        var playerY = game.input.y;
 
 
-      point.realX = game.world.centerX + point.x;
-      point.realY = point.y;
-      if ((playerX + touchSize) > (point.realX - lineSize) && (playerX - touchSize) < (point.realX + lineSize)){
-          collided = true;
-      }
-      return collided;
+        point.realX = game.world.centerX + point.x;
+        point.realY = point.y;
+        if ((playerX + touchSize) > (point.realX - lineSize) && (playerX - touchSize) < (point.realX + lineSize)){
+            collided = true;
+        }
+        return collided;
     },
     unpause: function(event){
         if(game.paused){
@@ -266,7 +268,10 @@ var playState = {
         }
     },
     updateScore: function(score){
-      this.scoreNumber += score;
-      this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
+        this.scoreNumber += score;
+        this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
+    },
+    stopGame:function() {
+
     }
 };
