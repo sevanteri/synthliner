@@ -5,7 +5,6 @@ var playState = {
         this.soundLevel = 0;
 
         this.bg = game.add.sprite(0, 0, 'grid');
-
         this.music = game.add.audio('testmusic');
 
         // ****************    Music   **********************
@@ -44,20 +43,23 @@ var playState = {
         this.music.loopFull();
 
         // ****************    Synthwave   **********************
-        var length = 354 / 80;
+        var motoOffset = 32;
+        var length = (354 - motoOffset) / 80;
         var points = [];
 
         for (var i = 0; i < 80; i++) {
-            points.push(new Phaser.Point(0, i * length));
+            points.push(new Phaser.Point(0, motoOffset + i * length));
         }
         this.syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, points);
-        //syntwave.scale.set(0.8);
+
+        this.moto = game.add.sprite(this.game.world.centerX, 16, 'moto');
+        this.moto.anchor.setTo(0.5, 0.5);
 
         this.syntwave.updateAnimation = function() {
+            that.moto.x = this.game.world.centerX + this.points[0].x;
             for (var i = this.points.length - 1; i > 0; i--) {
                 this.points[i].x = this.points[i - 1].x;
             }
-            // sound level is in range of [-40, 0]
             this.points[0].x = (that.soundLevel) * that.game.world.width - that.game.world.width/2;
         };
 
