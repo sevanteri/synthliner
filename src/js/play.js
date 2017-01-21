@@ -11,6 +11,8 @@ var playState = {
         this.bpm = 60;
         this.bgSpeed = 2;
         this.scoreNumber = 0;
+        this.scoreMultipler = 1;
+        this.comboTimer = 0;
 
         this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
         this.music = game.add.audio('stage_music_1');
@@ -188,6 +190,11 @@ var playState = {
         game.paused = true;
       }
       this.grid_anim1.y += this.bgSpeed;
+
+      if (!this.collides) {
+        this.comboTimer = 0;
+        this.scoreMultipler = 1;
+      }
     },
     movePlayerToPointer: function() {
       // Update player coordinates to pointer
@@ -197,7 +204,13 @@ var playState = {
       this.emitter.y = game.input.y;
       if(this.sampleSkipCounter % 2 === 0 && this.collides) {
         this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
-        this.updateScore(10);
+
+        this.updateScore(1 * this.scoreMultipler);
+        this.comboTimer++;
+        if(this.comboTimer > 100) {
+          this.comboTimer = 0;
+          this.scoreMultipler++;
+        }
       }
     },
     checkTouchCollision: function() {
