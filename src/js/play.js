@@ -3,7 +3,7 @@ var playState = {
         var that = this;
         this.syntwave = null;
         this.soundLevel = 0.5;
-        this.difficulty = 0.3;
+        this.difficulty = 0.2;
         this.sampleSkipCounter = 0;
         this.treshold = 0.1;
 
@@ -21,10 +21,8 @@ var playState = {
 
         var filterval = 0.05;
         this.filter.type = 'bandpass';
-        this.filter.frequency.value = 200;
+        this.filter.frequency.value = 300;
         this.filter.gain.value = filterval;
-
-        //console.log(filterval);
 
         //this.music.masterGainNode.disconnect();
         this.music.masterGainNode.connect(this.filter);
@@ -65,34 +63,43 @@ var playState = {
         var motoOffset = 32;
         var length = (354 - motoOffset) / 80;
         var points = [];
+        this.lastPoint = game.world.centerX;
 
         for (var i = 0; i < 80; i++) {
             points.push(new Phaser.Point(0, motoOffset + i * length));
         }
         this.syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, points);
 
+        this.motoShadows = [];
+        for (i = 0; i < 4; i++) {
+            var spr = game.add.sprite(-100, motoOffset/2, 'moto');
+            spr.anchor.setTo(0.5, 0.5);
+            spr.alpha = 0.8 - 0.2 * i;
+            this.motoShadows.push(spr);
+        }
         this.moto = game.add.sprite(this.game.world.centerX, 16, 'moto');
         this.moto.anchor.setTo(0.5, 0.5);
 
+
         this.syntwave.updateAnimation = function() {
-            that.moto.x = this.game.world.centerX + this.points[0].x;
-            for (var i = this.points.length - 1; i > 0; i--) {
+            that.lastPoint = this.points[0].x;
+            for (i = this.points.length - 1; i > 0; i--) {
                 this.points[i].x = this.points[i - 1].x;
             }
 
             // sound level is in range of [0, 1]
 
-            this.points[0].x = (that.soundLevel) * that.game.world.width - that.game.world.width/2;
+            this.points[0].x = (that.soundLevel) * that.game.world.width*1.2 - that.game.world.width/2;
         };
 
         // ****************    Touch   **********************
         this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'touchSprite');
-        this.player.scale.set(0.05);
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.anchor.setTo(0.5, 0.5);
     },
     update: function() {
       this.movePlayerToPointer();
+      this.moveMotoToLine();
     },
     movePlayerToPointer: function() {
       // Update player coordinates to pointer
@@ -103,5 +110,17 @@ var playState = {
       if(this.sampleSkipCounter % 2 === 0) {
         this.emitter.start(true, 1000, 0, Math.random() > 0.5 ? 2 : 1);
       }
+    },
+    motoShadowTimer: 0,
+    moveMotoToLine: function() {
+        this.motoShadowTimer += game.time.physicsElapsed;
+        if (this.motoShadowTimer >= 0.1) {
+            this.motoShadowTimer = 0;
+            for (i = this.motoShadows.length - 1; i > 0; i--) {
+                this.motoShadows[i].x = this.motoShadows[i - 1].x;
+            }
+            this.motoShadows[0].x = this.moto.x;
+        }
+        this.moto.x = this.game.world.centerX + this.lastPoint;
     }
 };
