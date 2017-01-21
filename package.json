@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/sevanteri/kanttiaalto.git"
   },
-  "author": "",
-  "license": "UNLICENSED",
+  "author": "Pete Sevander [pete@sevander.com]",
+  "license": "Creative Commons",
   "bugs": {
     "url": "https://github.com/sevanteri/kanttiaalto/issues"
   },
