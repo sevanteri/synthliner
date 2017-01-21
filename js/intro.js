@@ -34,13 +34,15 @@ var introState = {
         this.introText.anchor.setTo(0.5, 0);
 
         this.tw = game.add.tween(this.introText);
-        this.tw.to({y: -1000}, 30000, Phaser.Easing.Linear.None);
+        this.tw.to({y: -this.introText.height - 20}, 30000, Phaser.Easing.Linear.None);
         this.tw.onComplete.add(this.startGame, this);
         this.tw.start();
 
         this.g = game.add.graphics(0, 0);
-        this.g.beginFill('#FFFFFF');
+        this.g.beginFill(0xFFFFFF);
         this.g.drawRect(0,0, game.world.width, game.world.height);
+        this.g.endFill();
+        this.g.tint = 0xFFFFFF;
         this.g.alpha = 0;
 
         this.game.input.onTap.addOnce(this.startGame, this);
@@ -52,7 +54,10 @@ var introState = {
         // play bling
         game.scale.startFullScreen(false);
 
-        fadeObj(this.g, 1, this.reallyStart);
+        var that = this;
+        fadeObj(that.g, 1, function() {
+            tintObj(that.g, 0x000000, that.reallyStart, 500);
+        }, 200);
     },
 
     reallyStart: function() {
