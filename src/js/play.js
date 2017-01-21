@@ -34,11 +34,11 @@ var playState = {
                 max = Math.max(int[i], max);
             }
             //convert from magitude to decibel
-            that.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
+            // that.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
             //console.log(that.soundLevel);
             //
             that.soundLevel = max;
-            console.log(max);
+            // console.log(max);
         };
 
         this.music.loopFull();
@@ -48,7 +48,7 @@ var playState = {
         var points = [];
 
         for (var i = 0; i < 80; i++) {
-            points.push(new Phaser.Point(this.game.world.centerX, i * length));
+            points.push(new Phaser.Point(0, i * length));
         }
         this.syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, points);
         //syntwave.scale.set(0.8);
