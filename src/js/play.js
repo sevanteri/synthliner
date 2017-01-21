@@ -16,10 +16,12 @@ var playState = {
 
         this.game.onPause.add(function() {
             this.music.pause();
+            this.pauseGroup.x = 0;
         }, this);
 
         this.game.onResume.add(function() {
             this.music.loopFull();
+            this.pauseGroup.x = -500;
         }, this);
 
         game.input.onTap.add(function(){
@@ -122,6 +124,28 @@ var playState = {
         // ****************    Touch   **********************
         this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'touchSprite');
         this.player.anchor.setTo(0.5, 0.5);
+        this.player.animations.add('glow');
+        this.player.animations.play('glow', 12, true);
+
+        // ***************     Pause text
+        var pauseText = game.add.bitmapText(this.game.world.centerX,
+                                       this.game.world.centerY,
+                                       'awesomu',
+                                       "PAUSED",
+                                        38);
+        pauseText.anchor.setTo(0.5, 0.5);
+        var pauseguide = game.add.bitmapText(this.game.world.centerX,
+                                              this.game.world.centerY + 34,
+                                              'awesomu',
+                                              "Tap to Continue",
+                                              20);
+        pauseguide.anchor.setTo(0.5, 0.5);
+
+        this.pauseGroup = game.add.group();
+        this.pauseGroup.add(pauseText);
+        this.pauseGroup.add(pauseguide);
+        this.pauseGroup.x = -500;
+
       },
       motoShadowTimer: 0,
       moveMotoToLine: function() {

@@ -6,15 +6,16 @@ var bootState = {
         game.load.image('moto', './assets/moto.png');
         game.load.image('synthline', './assets/line.png');
         game.load.image('title', './assets/title.png');
-        game.load.image('touchSprite', './assets/finger.png');
 
         game.load.image('particle', './assets/particle.png');
         game.load.image('particle2', './assets/particle2.png');
         game.load.image('particle3', './assets/particle3.png');
         game.load.image('particle4', './assets/particle4.png');
 
-        game.load.spritesheet('grid_anim1', './assets/grid_anim1.png', 64, 64);
+        game.load.spritesheet('touchSprite', './assets/finger.png', 32, 32);
+        game.load.spritesheet('grid_anim1', './assets/grid_anim1.png', 72, 64);
 
+        game.load.audio('intromusic', ['./assets/sound/intromusic.ogg']);
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
         game.load.audio('stage_music_1', ['./assets/sound/stage_music_1.ogg']);
 
