@@ -7,7 +7,10 @@ var bootState = {
         game.load.image('synthline', './assets/line.png');
         game.load.image('title', './assets/title.png');
         game.load.image('touchSprite', './assets/finger.png');
+
         game.load.image('particle', './assets/particle.png');
+        game.load.image('particle2', './assets/particle2.png');
+        game.load.image('particle3', './assets/particle3.png');
 
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
         game.load.audio('stage_music_1', ['./assets/sound/stage_music_1.ogg']);
