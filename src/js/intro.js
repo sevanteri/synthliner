@@ -43,7 +43,7 @@ var introState = {
         this.g.drawRect(0,0, game.world.width, game.world.height);
         this.g.alpha = 0;
 
-        this.game.input.onUp.addOnce(this.startGame, this);
+        this.game.input.onTap.addOnce(this.startGame, this);
     },
 
     startGame: function() {
