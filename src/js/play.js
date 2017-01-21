@@ -215,7 +215,7 @@ var playState = {
       if(this.sampleSkipCounter % 2 === 0 && this.collides) {
         this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
 
-        this.updateScore(1 * this.scoreMultipler);
+        this.updateScore(this.scoreMultipler + Math.floor((this.game.world.height - this.player.y)/10));
         this.comboTimer++;
         if(this.comboTimer > 100) {
           this.comboTimer = 0;
