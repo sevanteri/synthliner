@@ -7,8 +7,8 @@ var bootState = {
         game.load.image('synthline', './assets/line.png');
         game.load.image('title', './assets/title.png');
         game.load.image('touchSprite', './assets/finger.png');
+        game.load.image('particle', './assets/particle.png');
 
-        // game.load.audio('testmusic', ['./assets/sound/musaa.ogg']);
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
         game.load.audio('stage_music_1', ['./assets/sound/stage_music_1.ogg']);
     },
