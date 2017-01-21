@@ -39,14 +39,7 @@ var playState = {
             this.unpause();
         }, this);
 
-        this.music.onStop.add(function() {
-            // center player and teddy
-            // crash
-            // explosions
-            // fade
-            // menu
-            game.state.start('menu');
-        }, this);
+        this.music.onStop.add(this.stopGame, this);
 
         // background pulse animations
         this.grid_anim1 = game.add.sprite(0, 0, 'grid_anim1');
@@ -271,7 +264,13 @@ var playState = {
         this.scoreNumber += score;
         this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
     },
-    stopGame:function() {
-
+    stopGame: function() {
+        // center player and teddy
+        // crash
+        // explosions
+        // fade
+        // save highscore plus multiplier
+        // menu
+        game.state.start('menu');
     }
 };
