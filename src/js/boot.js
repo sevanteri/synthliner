@@ -7,7 +7,9 @@ var bootState = {
         game.load.image('synthline', './assets/line.png');
         game.load.image('title', './assets/title.png');
         game.load.image('touchSprite', './assets/ball.png');
+
         game.load.audio('testmusic', ['./assets/sound/musaa.ogg']);
+        game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
     },
     create: function() {
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
