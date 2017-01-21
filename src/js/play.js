@@ -11,6 +11,8 @@ var playState = {
         this.bpm = 60;
         this.bgSpeed = 2;
         this.scoreNumber = 0;
+        this.scoreMultipler = 1;
+        this.comboTimer = 0;
 
         this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
         this.music = game.add.audio('stage_music_1');
@@ -148,7 +150,7 @@ var playState = {
         this.pauseGroup.x = -500;
 
         // ****************    Texts   **********************
-        this.score = game.add.bitmapText(game.world.centerX, game.world.height - 20, 'awesomu',"Score: " + this.scoreNumber,18);
+        this.score = game.add.bitmapText(game.world.centerX, game.world.height - 20, 'awesomu',"Score: " + this.scoreNumber + "1X",18);
 
         this.score.anchor.setTo(0.5, 0.5);
       },
@@ -188,16 +190,27 @@ var playState = {
         game.paused = true;
       }
       this.grid_anim1.y += this.bgSpeed;
+
+      if (!this.collides) {
+        this.comboTimer = 0;
+        this.scoreMultipler = 1;
+      }
     },
     movePlayerToPointer: function() {
       // Update player coordinates to pointer
       this.player.x = game.input.x;
       this.player.y = game.input.y;
       this.emitter.x = game.input.x;
-      this.emitter.y = game.input.y;
+      this.emitter.y = game.input.y + 16;
       if(this.sampleSkipCounter % 2 === 0 && this.collides) {
         this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
-        this.updateScore(10);
+
+        this.updateScore(1 * this.scoreMultipler);
+        this.comboTimer++;
+        if(this.comboTimer > 100) {
+          this.comboTimer = 0;
+          this.scoreMultipler++;
+        }
       }
     },
     checkTouchCollision: function() {
@@ -224,6 +237,6 @@ var playState = {
     },
     updateScore: function(score){
       this.scoreNumber += score;
-      this.score.setText("Score: " + this.scoreNumber);
+      this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
     }
 };
