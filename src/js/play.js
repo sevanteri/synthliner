@@ -3,6 +3,8 @@ var playState = {
         var that = this;
         this.syntwave = null;
         this.soundLevel = 0;
+        this.difficulty = 0.3;
+        this.sampleSkipCounter = 0;
 
         this.bg = game.add.sprite(0, 0, 'grid');
 
@@ -36,10 +38,15 @@ var playState = {
             }
             //convert from magitude to decibel
             // that.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
-            //console.log(that.soundLevel);
-            //
-            that.soundLevel = max;
-            // console.log(max);
+
+            that.sampleSkipCounter++;
+            if(that.sampleSkipCounter % 2 === 0) {
+                that.sampleSkipCounter = 0;
+                that.previousSoundLevel = that.soundLevel;
+                var delta = that.soundLevel > max ? that.soundLevel - max : max - that.soundLevel;
+                delta = delta > that.difficulty ? that.difficulty : delta;
+                that.soundLevel = that.soundLevel > max ? that.soundLevel - delta : that.soundLevel + delta;
+            }
         };
         this.music.loopFull();
 
@@ -57,7 +64,7 @@ var playState = {
             for (var i = this.points.length - 1; i > 0; i--) {
                 this.points[i].x = this.points[i - 1].x;
             }
-            // sound level is in range of [-40, 0]
+            // sound level is in range of [0, 1]
             this.points[0].x = (that.soundLevel) * that.game.world.width - that.game.world.width/2;
         };
 
