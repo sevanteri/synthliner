@@ -112,7 +112,7 @@ var playState = {
     // ----------------- UPDATE -----------------------
     update: function() {
       this.movePlayerToPointer();
-      console.log(this.checkTouchCollision());
+      this.collides = this.checkTouchCollision();
       this.moveMotoToLine();
     },
     movePlayerToPointer: function() {
@@ -121,8 +121,8 @@ var playState = {
       this.player.y = game.input.y;
       this.emitter.x = game.input.x;
       this.emitter.y = game.input.y;
-      if(this.sampleSkipCounter % 2 === 0) {
-        this.emitter.start(true, 1000, 0, Math.random() > 0.5 ? 2 : 1);
+      if(this.sampleSkipCounter % 2 === 0 && this.collides) {
+        this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
       }
     },
     checkTouchCollision: function() {
