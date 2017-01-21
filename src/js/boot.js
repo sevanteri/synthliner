@@ -11,6 +11,7 @@ var bootState = {
         game.load.image('particle', './assets/particle.png');
         game.load.image('particle2', './assets/particle2.png');
         game.load.image('particle3', './assets/particle3.png');
+        game.load.image('particle4', './assets/particle4.png');
 
         game.load.spritesheet('grid_anim1', './assets/grid_anim1.png', 64, 64);
 

@@ -111,7 +111,7 @@ var playState = {
         // **************** Particle emitter ****************
         this.emitter = game.add.emitter(game.world.centerX, 200, 200);
         this.emitter.makeParticles(['particle', 'particle2', 'particle3']);
-        this.emitter.setAlpha(0.3, 0.8);
+        this.emitter.setAlpha(0.5, 0.8);
         this.emitter.setScale(0.5, 1);
         this.emitter.gravity = 5000;
 
