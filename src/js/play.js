@@ -22,10 +22,10 @@ var playState = {
             this.music.loopFull();
         }, this);
 
-        // background animations
+        // background pulse animations
         this.grid_anim1 = game.add.sprite(28, 32, 'grid_anim1');
         this.grid_anim1.animations.add('go');
-        this.grid_anim1.animations.play('go', 10, false, true);
+        this.game.time.events.loop(Phaser.Timer.SECOND, this.showBgAnim, this);
 
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
@@ -130,6 +130,16 @@ var playState = {
               this.motoShadows[0].x = this.moto.x;
           }
           this.moto.x = this.game.world.centerX + this.lastPoint;
+    },
+    showBgAnim: function() {
+        // if (Math.random() > 0.5) return;
+
+        // random x and y
+        var randX = Math.floor(Math.random() * 11);
+        var randY = Math.floor(Math.random() * 22);
+        this.grid_anim1.x = randX * 28 + randX * 2;
+        this.grid_anim1.y = randY * 10 + randY * 4;
+        this.grid_anim1.animations.play('go', 10);
     },
     // ----------------- UPDATE -----------------------
     update: function() {
