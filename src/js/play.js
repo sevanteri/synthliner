@@ -24,8 +24,15 @@ var playState = {
         }, this);
 
         this.game.onResume.add(function() {
+            game.scale.startFullScreen(false);
             this.music.loopFull();
             this.pauseGroup.x = -500;
+        }, this);
+
+        this.game.scale.onFullScreenChange.add(function(scale) {
+            if (!scale.isFullscreen) {
+                this.game.paused = true;
+            }
         }, this);
 
         game.input.onTap.add(function(){
@@ -196,6 +203,7 @@ var playState = {
         this.multiplierResetSound.play();
         this.comboTimer = 0;
         this.scoreMultipler = 1;
+        this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
       }
     },
     movePlayerToPointer: function() {

@@ -21,7 +21,7 @@ var menuState = {
         this.headphone = game.add.text(this.game.world.centerX,
                                       this.game.world.height - 40,
                                       "Playing with headphones\nis recommended",
-                                      {font: "12px Arial",
+                                      {font: "14px bold Arial",
                                           align: 'center',
                                           fill: "#EEEEEE"});
         this.headphone.anchor.setTo(0.5, 0.5);
