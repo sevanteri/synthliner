@@ -22,8 +22,12 @@ var playState = {
             this.music.loopFull();
         }, this);
 
+        game.input.onTap.add(function(){
+            this.unpause();
+        }, this);
+
         // background pulse animations
-        this.grid_anim1 = game.add.sprite(28, 32, 'grid_anim1');
+        this.grid_anim1 = game.add.sprite(0, 0, 'grid_anim1');
         this.grid_anim1.animations.add('go');
         this.game.time.events.loop(Phaser.Timer.SECOND, this.showBgAnim, this);
 
@@ -135,11 +139,13 @@ var playState = {
         // if (Math.random() > 0.5) return;
 
         // random x and y
-        var randX = Math.floor(Math.random() * 11);
-        var randY = Math.floor(Math.random() * 22);
-        this.grid_anim1.x = randX * 28 + randX * 2;
-        this.grid_anim1.y = randY * 10 + randY * 4;
-        this.grid_anim1.animations.play('go', 10);
+        var randX = Math.floor(Math.random() * 12);
+        var randY = Math.floor(Math.random() * 20);
+        var randR = Math.floor(Math.random() * 4);
+        this.grid_anim1.rotation = [0, Math.PI/2, Math.PI, Math.PI/2*3][randR];
+        this.grid_anim1.x = 16 * randX;
+        this.grid_anim1.y = 16 * randY;
+        this.grid_anim1.animations.play('go', 12);
     },
     // ----------------- UPDATE -----------------------
     update: function() {
@@ -147,6 +153,11 @@ var playState = {
       this.collides = this.checkTouchCollision();
       this.moveMotoToLine();
       this.bg.tilePosition.y += this.bgSpeed;
+
+      // Check screen orientation
+      if(screen.orientation.type == "landscape-primary" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        game.paused = true;
+      }
       this.grid_anim1.y += this.bgSpeed;
     },
     movePlayerToPointer: function() {
@@ -175,5 +186,10 @@ var playState = {
           collided = true;
       }
       return collided;
+    },
+    unpause: function(event){
+        if(game.paused){
+            game.paused = false;
+        }
     }
 };
