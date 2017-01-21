@@ -16,6 +16,13 @@ var introState = {
         this.scaleObj(this.title, 1);
         this.scaleObj(this.startbutton, 1);
 
+        this.headphone = game.add.text(this.game.world.centerX,
+                                      this.game.world.height - 40,
+                                      "Playing with headphones\nis recommended",
+                                      {font: "12px Arial",
+                                          align: 'center',
+                                          fill: "#EEEEEE"});
+        this.headphone.anchor.setTo(0.5, 0.5);
     },
 
     scaleObj: function(obj, to, cb) {

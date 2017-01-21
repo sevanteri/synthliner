@@ -19,8 +19,6 @@ var playState = {
         this.filter.frequency.value = 300;
         this.filter.gain.value = filterval;
 
-        //console.log(filterval);
-
         //this.music.masterGainNode.disconnect();
         this.music.masterGainNode.connect(this.filter);
         //this.music.masterGainNode.connect(this.listenFilter);
@@ -90,7 +88,6 @@ var playState = {
 
         // ****************    Touch   **********************
         this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'touchSprite');
-        this.player.scale.set(0.05);
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.anchor.setTo(0.5, 0.5);
     },

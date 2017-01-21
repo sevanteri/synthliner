@@ -6,7 +6,7 @@ var bootState = {
         game.load.image('moto', './assets/moto.png');
         game.load.image('synthline', './assets/line.png');
         game.load.image('title', './assets/title.png');
-        game.load.image('touchSprite', './assets/ball.png');
+        game.load.image('touchSprite', './assets/finger.png');
 
         game.load.audio('testmusic', ['./assets/sound/musaa.ogg']);
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
