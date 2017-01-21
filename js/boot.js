@@ -19,6 +19,10 @@ var bootState = {
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
         game.load.audio('stage_music_1', ['./assets/sound/stage_music_1.ogg']);
 
+        game.load.audio('highscoreBling', ['./assets/sound/fx_newhighscore.ogg']);
+        game.load.audio('multiplierBling', ['./assets/sound/fx_resetmultiplier.ogg']);
+        game.load.audio('startBling', ['./assets/sound/fx_startgame.ogg']);
+
         game.load.bitmapFont('awesomu', './assets/font/font.png', './assets/font/font.fnt');
     },
     create: function() {

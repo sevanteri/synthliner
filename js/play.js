@@ -16,6 +16,7 @@ var playState = {
 
         this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
         this.music = game.add.audio('stage_music_1');
+        this.multiplierResetSound = game.add.audio('multiplierBling');
 
         this.game.onPause.add(function() {
             this.music.pause();
@@ -191,7 +192,8 @@ var playState = {
       }
       this.grid_anim1.y += this.bgSpeed;
 
-      if (!this.collides) {
+      if (!this.collides && this.scoreMultipler !== 1) {
+        this.multiplierResetSound.play();
         this.comboTimer = 0;
         this.scoreMultipler = 1;
       }
