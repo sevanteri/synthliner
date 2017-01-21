@@ -9,11 +9,6 @@ var playState = {
 
         this.bg = game.add.sprite(0, 0, 'grid');
         this.music = game.add.audio('testmusic');
-        this.emitter = game.add.emitter(game.world.centerX, 200, 200);
-        this.emitter.makeParticles(['particle']);
-        this.emitter.setAlpha(0.3, 0.8);
-        this.emitter.setScale(0.5, 1);
-        this.emitter.gravity = 200;
 
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
@@ -91,6 +86,13 @@ var playState = {
 
             this.points[0].x = (that.soundLevel) * that.game.world.width*1.2 - that.game.world.width/2;
         };
+
+        // **************** Particle emitter ****************
+        this.emitter = game.add.emitter(game.world.centerX, 200, 200);
+        this.emitter.makeParticles(['particle']);
+        this.emitter.setAlpha(0.3, 0.8);
+        this.emitter.setScale(0.5, 1);
+        this.emitter.gravity = 5000;
 
         // ****************    Touch   **********************
         this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'touchSprite');
