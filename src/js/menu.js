@@ -5,6 +5,7 @@ var menuState = {
     },
 
     startGame: function() {
+        menumusic.stop();
         game.state.start('play');
     }
 };
