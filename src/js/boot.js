@@ -17,6 +17,8 @@ var bootState = {
 
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
         game.load.audio('stage_music_1', ['./assets/sound/stage_music_1.ogg']);
+
+        game.load.bitmapFont('awesomu', './assets/font/font.png', './assets/font/font.fnt');
     },
     create: function() {
         game.stage.smoothed = false;
