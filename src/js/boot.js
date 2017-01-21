@@ -11,6 +11,7 @@ var bootState = {
         game.load.image('particle', './assets/particle.png');
         game.load.image('particle2', './assets/particle2.png');
         game.load.image('particle3', './assets/particle3.png');
+        game.load.image('particle4', './assets/particle4.png');
 
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
         game.load.audio('stage_music_1', ['./assets/sound/stage_music_1.ogg']);
