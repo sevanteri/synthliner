@@ -150,7 +150,7 @@ var playState = {
         this.pauseGroup.x = -500;
 
         // ****************    Texts   **********************
-        this.score = game.add.bitmapText(game.world.centerX, game.world.height - 20, 'awesomu',"Score: " + this.scoreNumber,18);
+        this.score = game.add.bitmapText(game.world.centerX, game.world.height - 20, 'awesomu',"Score: " + this.scoreNumber + "1X",18);
 
         this.score.anchor.setTo(0.5, 0.5);
       },
@@ -237,6 +237,6 @@ var playState = {
     },
     updateScore: function(score){
       this.scoreNumber += score;
-      this.score.setText("Score: " + this.scoreNumber);
+      this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
     }
 };
