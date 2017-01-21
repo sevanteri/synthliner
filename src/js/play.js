@@ -8,6 +8,7 @@ var playState = {
 
         this.music = game.add.audio('testmusic');
 
+        // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
         this.analyser = this.music.context.createScriptProcessor(0,1,1);
 
@@ -38,12 +39,10 @@ var playState = {
             //console.log(that.soundLevel);
             //
             that.soundLevel = max;
-            console.log(max);
         };
-
         this.music.loopFull();
 
-        // Main line
+        // ****************    Synthwave   **********************
         var length = 354 / 80;
         var points = [];
 
@@ -60,5 +59,19 @@ var playState = {
             // sound level is in range of [-40, 0]
             this.points[0].x = (that.soundLevel) * that.game.world.width - that.game.world.width/2;
         };
+
+        // ****************    Touch   **********************
+        this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'touchSprite');
+        this.player.scale.set(0.05);
+        game.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.player.anchor.setTo(0.5, 0.5);
+    },
+    update: function() {
+      this.movePlayerToPointer();
+    },
+    movePlayerToPointer: function() {
+      // Update player coordinates to pointer
+      this.player.x = game.input.x;
+      this.player.y = game.input.y;
     }
 };
