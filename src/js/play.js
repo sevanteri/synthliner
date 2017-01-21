@@ -201,7 +201,7 @@ var playState = {
       this.player.x = game.input.x;
       this.player.y = game.input.y;
       this.emitter.x = game.input.x;
-      this.emitter.y = game.input.y;
+      this.emitter.y = game.input.y + 16;
       if(this.sampleSkipCounter % 2 === 0 && this.collides) {
         this.emitter.start(true, 500, 0, Math.random() > 0.5 ? 2 : 1);
 
