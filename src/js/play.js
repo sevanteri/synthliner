@@ -25,7 +25,7 @@ var playState = {
 
         this.game.onResume.add(function() {
             game.scale.startFullScreen(false);
-            this.music.loopFull();
+            this.music.play();
             this.pauseGroup.x = -500;
         }, this);
 
@@ -37,6 +37,15 @@ var playState = {
 
         game.input.onTap.add(function(){
             this.unpause();
+        }, this);
+
+        this.music.onStop.add(function() {
+            // center player and teddy
+            // crash
+            // explosions
+            // fade
+            // menu
+            game.state.start('menu');
         }, this);
 
         // background pulse animations
@@ -87,7 +96,7 @@ var playState = {
                 that.previousSoundLevel = max;
             }
         };
-        this.music.loopFull();
+        this.music.play();
 
         // ****************    Synthwave   **********************
         var motoOffset = 32;
