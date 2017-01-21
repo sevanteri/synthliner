@@ -9,6 +9,11 @@ var playState = {
 
         this.bg = game.add.sprite(0, 0, 'grid');
         this.music = game.add.audio('testmusic');
+        this.emitter = game.add.emitter(game.world.centerX, 200, 200);
+        this.emitter.makeParticles(['particle']);
+        this.emitter.setAlpha(0.3, 0.8);
+        this.emitter.setScale(0.5, 1);
+        this.emitter.gravity = 200;
 
         // ****************    Music   **********************
         this.filter = this.music.context.createBiquadFilter();
@@ -18,8 +23,6 @@ var playState = {
         this.filter.type = 'bandpass';
         this.filter.frequency.value = 300;
         this.filter.gain.value = filterval;
-
-        //console.log(filterval);
 
         //this.music.masterGainNode.disconnect();
         this.music.masterGainNode.connect(this.filter);
@@ -38,6 +41,7 @@ var playState = {
                 out[i] = 0;
                 max = Math.max(int[i], max);
             }
+            console.log(max);
             //convert from magitude to decibel
             // that.soundLevel = 20*Math.log(Math.max(max,Math.pow(10,-72/20)))/Math.LN10;
 
@@ -90,7 +94,6 @@ var playState = {
 
         // ****************    Touch   **********************
         this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'touchSprite');
-        this.player.scale.set(0.05);
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.anchor.setTo(0.5, 0.5);
     },
@@ -102,6 +105,11 @@ var playState = {
       // Update player coordinates to pointer
       this.player.x = game.input.x;
       this.player.y = game.input.y;
+      this.emitter.x = game.input.x;
+      this.emitter.y = game.input.y;
+      if(this.sampleSkipCounter % 2 === 0) {
+        this.emitter.start(true, 1000, 0, Math.random() > 0.5 ? 2 : 1);
+      }
     },
     motoShadowTimer: 0,
     moveMotoToLine: function() {
