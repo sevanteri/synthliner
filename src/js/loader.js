@@ -8,6 +8,8 @@ var loaderState = {
         game.load.setPreloadSprite(spr);
 
         game.load.image('grid', './assets/grid.png');
+        game.load.image('grid_left', './assets/grid_left.png');
+        game.load.image('grid_right', './assets/grid_right.png');
         game.load.image('moto', './assets/moto.png');
         game.load.image('synthline', './assets/line.png');
         game.load.image('pause', './assets/pausebutton.png');
@@ -21,7 +23,7 @@ var loaderState = {
         game.load.spritesheet('grid_anim1', './assets/grid_anim1.png', 72, 64);
         game.load.spritesheet('playButton', './assets/play.png', 180, 120, 4);
         game.load.spritesheet('intro', './assets/intro.png', 400, 354);
-        game.load.spritesheet('title', './assets/title.png', 157, 187, 6);
+        game.load.spritesheet('title', './assets/title.png', 160, 186, 6);
 
         game.load.audio('intromusic', ['./assets/sound/intromusic.ogg']);
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
