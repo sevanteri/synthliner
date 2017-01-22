@@ -15,6 +15,7 @@ var bootState = {
         game.load.spritesheet('touchSprite', './assets/finger.png', 32, 32);
         game.load.spritesheet('grid_anim1', './assets/grid_anim1.png', 72, 64);
         game.load.spritesheet('playButton', './assets/play.png', 180, 120);
+        game.load.spritesheet('intro', './assets/intro.png', 400, 354);
 
         game.load.audio('intromusic', ['./assets/sound/intromusic.ogg']);
         game.load.audio('menumusic', ['./assets/sound/menumusic.ogg']);
