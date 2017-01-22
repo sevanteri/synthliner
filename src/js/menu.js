@@ -4,6 +4,22 @@ var menuState = {
         this.music = game.add.audio('menumusic');
         this.music.loopFull();
 
+        this.startButton = game.add.button(game.world.centerX, 160, 'playButton', this.startGame, this);
+        this.startButton.anchor.setTo(0.5, 0);
+        this.startButton.scale = {x:0, y:0};
+        this.startButton.animations.add('bling', null, 4, false);
+        this.startButton.animations.add('asdf', [0], 0, false);
+        this.startButton.animations.getAnimation('bling').onComplete.add(function() {
+
+            this.startButton.animations.play('asdf');
+            game.time.events.add(Phaser.Timer.SECOND * Math.floor(1 + Math.random() * 4), function() {
+                this.startButton.animations.play('bling');
+            }, this);
+
+        }, this);
+        this.startButton.animations.play('bling');
+
+
         this.title = game.add.image(game.world.centerX,
                                    90,
                                    'title');
@@ -21,21 +37,6 @@ var menuState = {
 
         }, this);
         this.title.animations.play('bling');
-
-        this.startButton = game.add.button(game.world.centerX, 160, 'playButton', this.startGame, this);
-        this.startButton.anchor.setTo(0.5, 0);
-        this.startButton.scale = {x:0, y:0};
-        this.startButton.animations.add('bling', null, 4, false);
-        this.startButton.animations.add('asdf', [0], 0, false);
-        this.startButton.animations.getAnimation('bling').onComplete.add(function() {
-
-            this.startButton.animations.play('asdf');
-            game.time.events.add(Phaser.Timer.SECOND * Math.floor(1 + Math.random() * 4), function() {
-                this.startButton.animations.play('bling');
-            }, this);
-
-        }, this);
-        this.startButton.animations.play('bling');
 
         scaleObj(this.title, 1);
         scaleObj(this.startButton, 1);
@@ -66,10 +67,9 @@ var menuState = {
         scaleObj(this.title, 5);
         fadeObj(this.title, 0);
         scaleObj(this.startButton, 0, this.reallyStart);
-        game.state.start('play');
     },
 
     reallyStart: function() {
-        game.state.start('menu');
+        game.state.start('play');
     }
 };
