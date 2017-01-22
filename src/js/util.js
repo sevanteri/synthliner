@@ -22,3 +22,7 @@ var tintObj = function(obj, to, cb, d) {
     if (cb) tw.onComplete.add(cb, this);
     tw.start();
 };
+
+var setFullscreen = function() {
+    return game.scale.startFullScreen(false);
+};

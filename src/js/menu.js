@@ -57,8 +57,7 @@ var menuState = {
     },
 
     startGame: function() {
-        if (!game.scale.isFullScreen) {
-            game.scale.startFullScreen(false);
+        if (!game.scale.isFullScreen && setFullscreen()) {
             return;
         }
 
