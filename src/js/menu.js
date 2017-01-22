@@ -4,11 +4,23 @@ var menuState = {
         this.music = game.add.audio('menumusic');
         this.music.loopFull();
 
-        this.title = game.add.image(this.game.world.centerX, 
+        this.title = game.add.image(game.world.centerX,
                                    90,
                                    'title');
         this.title.anchor.setTo(0.5, 0.5);
         this.title.scale = {x:0, y:0};
+
+        this.title.animations.add('bling', [0,1,2,3,4,5,6,0,0,0], 12, false);
+        this.title.animations.add('nope', [0], 0, false);
+        this.title.animations.getAnimation('bling').onComplete.add(function() {
+
+            this.title.animations.play('nope');
+            game.time.events.add(Phaser.Timer.SECOND * Math.floor(1 + Math.random() * 4), function() {
+                this.title.animations.play('bling');
+            }, this);
+
+        }, this);
+        this.title.animations.play('bling');
 
         this.startButton = game.add.button(game.world.centerX, 160, 'playButton', this.startGame, this);
         this.startButton.anchor.setTo(0.5, 0);
