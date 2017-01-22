@@ -56,8 +56,8 @@ var introState = {
         this.g.alpha = 0;
 
         this.game.input.onTap.add(function() {
-            if (!game.scale.isFullScreen) {
-                game.scale.startFullScreen(false);
+            if (!game.scale.isFullScreen && setFullscreen()) {
+                return;
             } else {
                 this.startGame();
             }

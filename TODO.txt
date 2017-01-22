@@ -1,0 +1,3 @@
+- Fix for Mobile Safari
+- Intro animation
+- Highscore

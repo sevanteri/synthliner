@@ -30,8 +30,8 @@ var playState = {
         }, this);
 
         this.game.onResume.add(function() {
-            game.scale.startFullScreen(false);
-            this.music.play();
+            setFullscreen();
+            this.music.resume();
             this.pauseGroup.x = -500;
         }, this);
 
