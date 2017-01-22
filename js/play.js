@@ -14,8 +14,12 @@ var playState = {
         this.scoreMultipler = 1;
         this.comboTimer = 0;
         this.running = true;
+        this.gridCounter = 0;
 
-        this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
+        this.bg = game.add.tileSprite(18, 0, 200, 354, 'grid');
+        this.bgleft = game.add.sprite(0, -16, 'grid_left');
+        this.bgright = game.add.sprite(game.world.width - 17, -16, 'grid_right');
+
         this.music = game.add.audio('stage_music_1');
         this.multiplierResetSound = game.add.audio('multiplierBling');
 
@@ -224,6 +228,11 @@ var playState = {
         }
         this.moveMotoToLine();
         this.bg.tilePosition.y += this.bgSpeed;
+
+        this.gridCounter += this.bgSpeed;
+
+        this.bgleft.y = -16 + this.gridCounter % 16;
+        this.bgright.y = -16 + this.gridCounter % 16;
 
         // Check screen orientation
         if(screen.orientation.type == "landscape-primary" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){

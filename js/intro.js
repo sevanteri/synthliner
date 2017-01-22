@@ -3,6 +3,16 @@ var introState = {
         this.music = game.add.audio('intromusic');
         this.music.loopFull();
 
+        this.animTime = 30000;
+
+        this.bg = game.add.sprite(0, 0, 'intro');
+        this.bg.animations.add('go');
+        this.bg.animations.play('go', 2, true);
+
+        this.bgTween = game.add.tween(this.bg);
+        this.bgTween.to({x: -200}, this.animTime);
+        this.bgTween.start();
+
         this.introText = game.add.text(game.world.centerX,
                 game.world.height,
                 "YEAR 20XX\n" +
@@ -34,7 +44,7 @@ var introState = {
         this.introText.anchor.setTo(0.5, 0);
 
         this.tw = game.add.tween(this.introText);
-        this.tw.to({y: -this.introText.height - 20}, 30000, Phaser.Easing.Linear.None);
+        this.tw.to({y: -this.introText.height - 20}, this.animTime, Phaser.Easing.Linear.None);
         this.tw.onComplete.add(this.startGame, this);
         this.tw.start();
 
@@ -45,9 +55,12 @@ var introState = {
         this.g.tint = 0xFFFFFF;
         this.g.alpha = 0;
 
-        this.game.input.onTap.addOnce(function() {
-            game.scale.startFullScreen(false);
-            this.startGame();
+        this.game.input.onTap.add(function() {
+            if (!game.scale.isFullScreen) {
+                game.scale.startFullScreen(false);
+            } else {
+                this.startGame();
+            }
         }, this);
     },
 
