@@ -31,7 +31,7 @@ var playState = {
 
         this.game.onResume.add(function() {
             setFullscreen();
-            this.music.play();
+            this.music.resume();
             this.pauseGroup.x = -500;
         }, this);
 
