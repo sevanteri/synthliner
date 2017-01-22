@@ -91,11 +91,7 @@ body {
   margin: 0;
   padding: 0;
 }
-h2 {
-  text-align: center;
-  font-size: 4rem;
-  color: yellow;
-}
-#game {
-  margin: 0 auto 0 auto;
+canvas {
+  padding: 0;
+  margin: 0 auto !important;
 }

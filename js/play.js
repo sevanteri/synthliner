@@ -13,6 +13,7 @@ var playState = {
         this.scoreNumber = 0;
         this.scoreMultipler = 1;
         this.comboTimer = 0;
+        this.running = true;
 
         this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
         this.music = game.add.audio('stage_music_1');
@@ -39,7 +40,9 @@ var playState = {
             this.unpause();
         }, this);
 
-        this.music.onStop.add(this.stopGame, this);
+        this.music.onStop.add(function() {
+            this.stopGame();
+        }, this);
 
         // background pulse animations
         this.grid_anim1 = game.add.sprite(0, 0, 'grid_anim1');
@@ -92,39 +95,43 @@ var playState = {
         this.music.play();
 
         // ****************    Synthwave   **********************
-        var motoOffset = 32;
-        var length = (354 - motoOffset) / 80;
+        this.motoOffset = 32;
+        var length = (354 - this.motoOffset) / 80;
         this.wavePoints = [];
-        this.lastPoint = game.world.centerX;
+        this.lastPoint = {x: game.world.centerX, y:0};
 
         for (var i = 0; i < 80; i++) {
-            this.wavePoints.push(new Phaser.Point(0, motoOffset + i * length));
+            this.wavePoints.push(new Phaser.Point(0, this.motoOffset + i * length));
         }
         this.syntwave = game.add.rope(this.game.world.centerX, 0, 'synthline', null, this.wavePoints);
         //syntwave.scale.set(0.8);
 
-        this.motoShadows = [];
+        this.motoShadows = this.game.add.group();
         for (i = 0; i < 4; i++) {
-            var spr = game.add.sprite(-100, motoOffset/2, 'moto');
+            var spr = game.add.sprite(-100, this.motoOffset/2, 'moto');
             spr.anchor.setTo(0.5, 0.5);
             spr.alpha = 0.8 - 0.2 * i;
-            this.motoShadows.push(spr);
+            this.motoShadows.add(spr);
         }
         this.moto = game.add.sprite(this.game.world.centerX, 16, 'moto');
         this.moto.anchor.setTo(0.5, 0.5);
 
         this.syntwave.updateAnimation = function() {
-            that.lastPoint = that.wavePoints[0].x;
+            that.lastPoint = this.points[0];
+
             for (var i = that.wavePoints.length - 1; i > 0; i--) {
                 that.wavePoints[i].x = that.wavePoints[i - 1].x;
-
+                that.wavePoints[i].y = that.wavePoints[i - 1].y + length;
             }
             // sound level is in range of [0, 1]
-            var bpm = 60;
-            that.sineWaveCounter = that.sineWaveCounter + game.time.physicsElapsed;
-            var sinewavevalue = that.sineWaveCounter / bpm * 60 * (Math.PI / 2);
-            sinewavevalue = that.sineWaveCounter > 10 && parseInt(that.sineWaveCounter) % (bpm / 6) < 5 ? sinewavevalue - 1 + that.sineWaveCounter / bpm * 120 * (Math.PI / 2) : sinewavevalue;
-            this.points[0].x = (0.15 + that.soundLevel *0.7 + ((Math.sin(sinewavevalue) + 1) / 2 *0.3)) * that.game.world.width*1.2 - that.game.world.width/2;
+
+            if (that.running) {
+                var bpm = that.bpm;
+                that.sineWaveCounter = that.sineWaveCounter + game.time.physicsElapsed;
+                var sinewavevalue = that.sineWaveCounter / bpm * 60 * (Math.PI / 2);
+                sinewavevalue = that.sineWaveCounter > 10 && parseInt(that.sineWaveCounter) % (bpm / 6) < 5 ? sinewavevalue - 1 + that.sineWaveCounter / bpm * 120 * (Math.PI / 2) : sinewavevalue;
+                this.points[0].x = (0.15 + that.soundLevel *0.7 + ((Math.sin(sinewavevalue) + 1) / 2 *0.3)) * that.game.world.width*1.2 - that.game.world.width/2;
+            }
         };
 
         // **************** Particle emitter ****************
@@ -183,11 +190,12 @@ var playState = {
         if (this.motoShadowTimer >= 0.1) {
             this.motoShadowTimer = 0;
             for (i = this.motoShadows.length - 1; i > 0; i--) {
-                this.motoShadows[i].x = this.motoShadows[i - 1].x;
+                this.motoShadows.children[i].x = this.motoShadows.children[i - 1].x;
             }
-            this.motoShadows[0].x = this.moto.x;
+            this.motoShadows.children[0].x = this.moto.x;
         }
-        this.moto.x = this.game.world.centerX + this.lastPoint;
+        this.moto.x = this.game.world.centerX + this.lastPoint.x;
+        this.moto.y = this.lastPoint.y - this.motoOffset/2;
     },
     showBgAnim: function() {
         // if (Math.random() > 0.5) return;
@@ -203,8 +211,17 @@ var playState = {
     },
     // ----------------- UPDATE -----------------------
     update: function() {
-        this.movePlayerToPointer();
-        this.collides = this.checkTouchCollision();
+        if (this.running) {
+            this.movePlayerToPointer();
+            this.collides = this.checkTouchCollision();
+
+            if (!this.collides && this.scoreMultipler !== 1) {
+                this.multiplierResetSound.play();
+                this.comboTimer = 0;
+                this.scoreMultipler = 1;
+                this.updateScore(0);
+            }
+        }
         this.moveMotoToLine();
         this.bg.tilePosition.y += this.bgSpeed;
 
@@ -213,13 +230,6 @@ var playState = {
             game.paused = true;
         }
         this.grid_anim1.y += this.bgSpeed;
-
-        if (!this.collides && this.scoreMultipler !== 1) {
-            this.multiplierResetSound.play();
-            this.comboTimer = 0;
-            this.scoreMultipler = 1;
-            this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
-        }
     },
     movePlayerToPointer: function() {
         // Update player coordinates to pointer
@@ -265,12 +275,54 @@ var playState = {
         this.score.setText("Score: " + this.scoreNumber + " " + this.scoreMultipler + "X");
     },
     stopGame: function() {
+        var that = this;
+        this.running = false;
+        this.motoShadows.y = -100;
+
+        this.wavePoints[0].x = 0;
+
+        this.emitter.x = game.world.centerX;
+        this.emitter.y = game.world.centerY;
+        this.emitter.gravity = 0;
+
         // center player and teddy
-        // crash
-        // explosions
+        var playerTween = game.add.tween(this.player);
+        playerTween.to({x: this.game.world.centerX,
+                        y: this.game.world.height - 50},
+                       2000,
+                       Phaser.Easing.Circular.EaseInOut);
+        playerTween.onComplete.add(function() {
+            // crash
+            var to = {y: this.game.world.centerY};
+            var playerTween = game.add.tween(this.player);
+            var motoTween = game.add.tween(this.wavePoints[0]);
+
+            playerTween.to(to);
+            motoTween.to(to);
+
+            playerTween.onComplete.add(function() {
+                // explosions
+                that.emitter.start(true, 1000, 0, 10000);
+                var g = game.add.graphics(0, 0);
+                g.beginFill(0xFFFFFF);
+                g.drawRect(0,0, game.world.width, game.world.height);
+                g.endFill();
+                g.alpha = 0;
+                fadeObj(g, 1, function() {
+                    tintObj(g, 0x000000, function() {
+                        game.state.start('menu');
+                    });
+                });
+
+            }, this);
+
+            playerTween.start();
+            motoTween.start();
+        }, this);
+        playerTween.start();
         // fade
         // save highscore plus multiplier
         // menu
-        game.state.start('menu');
+        // this.game.state.start('menu');
     }
 };
