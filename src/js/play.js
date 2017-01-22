@@ -14,8 +14,13 @@ var playState = {
         this.scoreMultipler = 1;
         this.comboTimer = 0;
         this.running = true;
+        this.highestMultipler = 1;
+        this.gridCounter = 0;
 
-        this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
+        this.bg = game.add.tileSprite(18, 0, 200, 354, 'grid');
+        this.bgleft = game.add.sprite(0, -16, 'grid_left');
+        this.bgright = game.add.sprite(game.world.width - 17, -16, 'grid_right');
+
         this.music = game.add.audio('stage_music_1');
         this.multiplierResetSound = game.add.audio('multiplierBling');
 
@@ -225,6 +230,11 @@ var playState = {
         this.moveMotoToLine();
         this.bg.tilePosition.y += this.bgSpeed;
 
+        this.gridCounter += this.bgSpeed;
+
+        this.bgleft.y = -16 + this.gridCounter % 16;
+        this.bgright.y = -16 + this.gridCounter % 16;
+
         // Check screen orientation
         if(screen.orientation.type == "landscape-primary" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
             game.paused = true;
@@ -245,6 +255,9 @@ var playState = {
             if(this.comboTimer > 100) {
                 this.comboTimer = 0;
                 this.scoreMultipler++;
+                if (this.scoreMultipler > this.highestMultipler) {
+                  this.highestMultipler = this.scoreMultipler;
+                }
             }
         }
     },
@@ -310,7 +323,7 @@ var playState = {
                 g.alpha = 0;
                 fadeObj(g, 1, function() {
                     tintObj(g, 0x000000, function() {
-                        game.state.start('menu');
+                        game.state.start('highScore', true, false, {"score": that.scoreNumber, "multipler": that.highestMultipler});
                     });
                 });
 
