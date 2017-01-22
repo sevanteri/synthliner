@@ -45,14 +45,16 @@ var introState = {
         this.g.tint = 0xFFFFFF;
         this.g.alpha = 0;
 
-        this.game.input.onTap.addOnce(this.startGame, this);
+        this.game.input.onTap.addOnce(function() {
+            game.scale.startFullScreen(false);
+            this.startGame();
+        }, this);
     },
 
     startGame: function() {
         this.music.stop();
         game.add.audio('startBling').play();
         // play bling
-        game.scale.startFullScreen(false);
 
         var that = this;
         fadeObj(that.g, 1, function() {
