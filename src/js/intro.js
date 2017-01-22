@@ -55,9 +55,12 @@ var introState = {
         this.g.tint = 0xFFFFFF;
         this.g.alpha = 0;
 
-        this.game.input.onTap.addOnce(function() {
-            game.scale.startFullScreen(false);
-            this.startGame();
+        this.game.input.onTap.add(function() {
+            if (!game.scale.isFullScreen) {
+                game.scale.startFullScreen(false);
+            } else {
+                this.startGame();
+            }
         }, this);
     },
 
