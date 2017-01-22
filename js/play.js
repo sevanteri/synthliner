@@ -14,6 +14,7 @@ var playState = {
         this.scoreMultipler = 1;
         this.comboTimer = 0;
         this.running = true;
+        this.highestMultipler = 1;
         this.gridCounter = 0;
 
         this.bg = game.add.tileSprite(18, 0, 200, 354, 'grid');
@@ -29,7 +30,7 @@ var playState = {
         }, this);
 
         this.game.onResume.add(function() {
-            game.scale.startFullScreen(false);
+            setFullscreen();
             this.music.play();
             this.pauseGroup.x = -500;
         }, this);
@@ -254,6 +255,9 @@ var playState = {
             if(this.comboTimer > 100) {
                 this.comboTimer = 0;
                 this.scoreMultipler++;
+                if (this.scoreMultipler > this.highestMultipler) {
+                  this.highestMultipler = this.scoreMultipler;
+                }
             }
         }
     },
@@ -319,7 +323,7 @@ var playState = {
                 g.alpha = 0;
                 fadeObj(g, 1, function() {
                     tintObj(g, 0x000000, function() {
-                        game.state.start('menu');
+                        game.state.start('highScore', true, false, {"score": that.scoreNumber, "multipler": that.highestMultipler});
                     });
                 });
 
