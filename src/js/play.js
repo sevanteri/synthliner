@@ -14,6 +14,7 @@ var playState = {
         this.scoreMultipler = 1;
         this.comboTimer = 0;
         this.running = true;
+        this.highestMultipler = 1;
 
         this.bg = game.add.tileSprite(0, 0, 200, 354, 'grid');
         this.music = game.add.audio('stage_music_1');
@@ -245,6 +246,9 @@ var playState = {
             if(this.comboTimer > 100) {
                 this.comboTimer = 0;
                 this.scoreMultipler++;
+                if (this.scoreMultipler > this.highestMultipler) {
+                  this.highestMultipler = this.scoreMultipler;
+                }
             }
         }
     },
@@ -310,7 +314,7 @@ var playState = {
                 g.alpha = 0;
                 fadeObj(g, 1, function() {
                     tintObj(g, 0x000000, function() {
-                        game.state.start('menu');
+                        game.state.start('highScore', true, false, {"score": that.scoreNumber, "multipler": that.highestMultipler});
                     });
                 });
 
