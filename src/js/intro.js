@@ -13,14 +13,14 @@ var introState = {
         this.bgTween.to({x: -200}, this.animTime);
         this.bgTween.start();
 
-        this.introText = game.add.text(game.world.centerX,
-                game.world.height,
+        this.introText = game.add.bitmapText(game.world.centerX,
+                game.world.height, "awesomu",
                 "YEAR 20XX\n" +
                 "...\n" +
                 "THE INFAMOUS PROTON RIDER,\n" +
-                "CODENAME \"FAST TEDDY\", HAS\n" +
-                "ESCAPED FROM THE CELLARS OF\n" +
-                "THE UNDERWORLD.\n" +
+                "CODENAME \"FAST TEDDY\",\n" +
+                "HAS ESCAPED FROM THE CELLARS\n" +
+                "OF THE UNDERWORLD.\n" +
                 "\n" +
                 "RIDING HIS PROTON BIKE\n" +
                 "FABULOUSLY TO THE NEON\n" +
@@ -39,8 +39,8 @@ var introState = {
                 "GALAXY.\n" +
                 "...\n" +
                 "WHAT ARE YOU WAITING\n" +
-                "FOR? GO GET HIM!",
-                {font:"12px bold Arial", fill:"#eee"});
+                "FOR? GO GET HIM!", 10);
+        this.introText.smoothed = false;
         this.introText.anchor.setTo(0.5, 0);
 
         this.tw = game.add.tween(this.introText);
